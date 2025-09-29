@@ -1,0 +1,16 @@
+{
+  "name": "@udi/searchx",
+  "version": "1.0.0",
+  "main": "src/useSearch.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "peerDependencies": {
+    "react": ">=17"
+  }
+}
