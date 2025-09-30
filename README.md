@@ -128,4 +128,4 @@ Methods:
 
 ## 📄 License
 
-MIT © 2025 [Uditha Vithanage](https://github.com/yourusername)
+MIT © 2025 [Uditha Vithanage](https://github.com/udithavithanage)
