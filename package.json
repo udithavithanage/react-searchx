@@ -1,5 +1,5 @@
 {
-  "name": "@udi/searchx",
+  "name": "react-searchx",
   "version": "1.0.0",
   "main": "src/useSearch.js",
   "type": "module",

@@ -1,4 +1,4 @@
-# @udi/searchx
+# react-searchx
 
 A lightweight search library with caching, pagination, and debouncing, built for React.
 It helps avoid unnecessary API calls while typing and provides a hook for seamless integration in React apps.
@@ -18,13 +18,13 @@ It helps avoid unnecessary API calls while typing and provides a hook for seamle
 ## 📦 Installation
 
 ```bash
-npm install @udi/searchx
+npm install react-searchx
 ```
 
 or
 
 ```bash
-yarn add @udi/searchx
+yarn add react-searchx
 ```
 
 ---
@@ -51,7 +51,7 @@ async function myApi(query, limit, offset, signal) {
 
 ```jsx
 import React, { useState } from "react";
-import useSearch from "@udi/searchx";
+import useSearch from "react-searchx";
 
 export default function App() {
   const { items, loading, hasMore, setQuery, loadMore } = useSearch(myApi, {
@@ -83,7 +83,7 @@ export default function App() {
 ### 3. Use the class directly (non-React)
 
 ```js
-import SearchLibrary from "@udi/searchx/lib/searchLibrary.js";
+import SearchLibrary from "react-searchx/lib/searchLibrary.js";
 
 const searchLib = new SearchLibrary(myApi, { debounceTime: 400 });
 
