@@ -3,13 +3,16 @@
   "version": "1.0.0",
   "main": "src/useSearch.js",
   "type": "module",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "keywords": [
+    "search",
+    "react",
+    "debounce",
+    "pagination",
+    "hook"
+  ],
+  "author": "Uditha Vithanage",
+  "license": "MIT",
+  "description": "Debounced search library with caching and pagination for React",
   "peerDependencies": {
     "react": ">=17"
   }
