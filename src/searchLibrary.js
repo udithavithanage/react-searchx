@@ -1,4 +1,3 @@
-// src/searchLibrary.js
 export default class SearchLibrary {
   constructor(apiFn, { debounceTime = 400, maxQueries = 200 } = {}) {
     if (typeof apiFn !== "function")
@@ -91,45 +90,36 @@ export default class SearchLibrary {
   }
 
   search(query, limit = 10) {
-    const base = this._keyBase(query, limit);
-    const entry = this.cache.get(base);
-    if (entry && entry.pages.has(0)) {
-      return Promise.resolve({
-        items: this._combinedItems(entry),
-        total: entry.total,
-        hasMore:
-          entry.total === null
-            ? true
-            : this._combinedItems(entry).length < entry.total,
-      });
-    }
+    this.latestQuery = { query, limit };
 
-    if (this.debouncePromises.has(base))
-      return this.debouncePromises.get(base).promise;
+    if (this.debouncePromise) return this.debouncePromise;
 
     let resFn, rejFn;
-    const promise = new Promise((res, rej) => {
+    this.debouncePromise = new Promise((res, rej) => {
       resFn = res;
       rejFn = rej;
     });
-    this.debouncePromises.set(base, { promise, resolve: resFn, reject: rejFn });
+    this.debounceResolve = resFn;
+    this.debounceReject = rejFn;
 
-    if (this.debounceTimers.has(base))
-      clearTimeout(this.debounceTimers.get(base));
-    const t = setTimeout(() => {
-      this.debounceTimers.delete(base);
+    if (this.debounceTimer) clearTimeout(this.debounceTimer);
+
+    this.debounceTimer = setTimeout(() => {
+      this.debounceTimer = null;
+      const { query, limit } = this.latestQuery;
+
       this.fetchPage(query, limit, 0)
         .then((r) => {
-          this.debouncePromises.get(base)?.resolve(r);
-          this.debouncePromises.delete(base);
+          this.debounceResolve(r);
+          this.debouncePromise = null;
         })
         .catch((e) => {
-          this.debouncePromises.get(base)?.reject(e);
-          this.debouncePromises.delete(base);
+          this.debounceReject(e);
+          this.debouncePromise = null;
         });
     }, this.debounceTime);
-    this.debounceTimers.set(base, t);
-    return promise;
+
+    return this.debouncePromise;
   }
 
   loadMore(query, limit = 10) {
